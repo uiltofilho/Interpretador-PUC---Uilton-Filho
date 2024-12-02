@@ -1,0 +1,52 @@
+Programa. Pograma  ::= "program" Ident Cmdlist; 
+rules Cmdlist       ::= Cmdlist Cmd | Cmd;
+rules Cmd           ::= "" | Modules | Type | Consts | Variables | Functions | Block ;
+
+rules Modules       ::= "" | "uses" Modidentifier ";";
+rules Modidentifier ::= Ident | Ident "," Modidentifier;
+
+rules Type          ::= "" | "type" Struct;
+rules Struct        ::= "struct" Structcontent "end;";
+rules Structcontent ::= "" | Ident ":" Var_types ";";
+rules Var_types     ::= Ptr | Struct | "Integer" | "String" | "Double";
+
+rules Vector        ::= Ident "[" Integer "]";
+
+rules Ptr           ::= "^"Var_types;
+
+rules  Intexpr   ::=  Intterm  | "+" Intexpr  |" -"  Intexpr    |   Intterm OPMAT  Intterm;
+rules Intterm   ::= Var | Const | "read";
+rules  OPMAT ::= "+" | "-" | "*" | "/" | "%";
+Lv11. Var       ::= Ident;
+
+rules Consts ::= "" | "const" Const;
+rules Const ::= Ident "=" Integer | Ident "=" String;
+
+rules Variables ::= "var" Variable;
+rules Variable ::= Ident ":" Var_types;
+
+rules Parameters ::= Variable;
+
+rules Functions ::= "function" Ident "(" Parameters ")" ":" Var_types ";" "begin" Statement "end";
+
+rules Statement_list ::= Statement | Statement Statement_list;
+rules Block ::= "begin" Statement_list "end";
+
+rules Expression ::= Simple_expression | Simple_expression Relational_operator Simple_expression;
+rules Statement ::= Assign | If | While | For | Goto | Module;
+rules Assign ::= Ident "=" Expression | Ident "=" Functions ";" | Ident "=" Integer | Ident "=" String | Ident "=" Double | Ident "=" Ptr | Ident "=" Struct;
+rules If ::= "if" "(" Expression ")" "then" Statement | "if" "(" Expression ")" "then" Statement "else" Statement;
+rules While ::= "while" "(" Expression ")" "do" Statement;
+rules For ::= "for" Ident "=" Expression "do" Statement;
+rules Goto ::= "goto" Ident;
+
+rules Block_functions ::= "begin" Functions "end";
+rules Module ::= "module" Ident ";" Block_functions;
+
+rules Relational_operator ::= ">" | "<" | ">=" | "<=" | "==" | "!=";
+
+rules Simple_expression ::= Term | Term Additive_operator Simple_expression;
+rules Term ::= Factor | Factor Multiplicative_operator Term;
+rules Factor ::= Ident | Integer;
+rules Additive_operator ::= "+" | "-";
+rules Multiplicative_operator ::= "*" | "/";
