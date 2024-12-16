@@ -1,0 +1,19 @@
+
+-- Simples linguagem 
+
+EAdd.  Expr ::= Expr "+" Term ;
+ESub.  Expr ::= Expr "-" Term ;
+TMul.  Term ::= Term "*" Factor ;
+TDiv.  Term ::= Term "/" Factor ;
+TExpr. Term ::= Factor ;
+FInt.  Factor ::= Integer ;
+FVar.  Factor ::= Ident ;
+FPar.  Factor ::= "(" Expr ")" ;
+
+Assign. Stm ::= Ident "=" Expr ;
+Print.  Stm ::= "print" Expr ;
+
+-- Lexical rules
+token Integer  (digit+) ;
+token Ident    letter (letter | digit)* ;
+
